@@ -24,6 +24,8 @@ module.exports = {
   ticTacToeBoard: Array(9).fill(0),
   draw: true,
   isHumanPlaying: false,
+  player : "h",
+  whoIsPlaying : {"h":"Human", "r":"Random"},
   winStates: [
     [0, 1, 2],
     [3, 4, 5],
