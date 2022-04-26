@@ -25,4 +25,23 @@ function findAllBoardRotations(position) {
     return max_rotation;
 }
 
-// function 
+function findARotation(position) {
+    let max_rotation = findAllBoardRotations(position);
+    return max_rotation[Math.floor(Math.random() * max_rotation.length)];
+}
+
+function isMaxRotation(position) {
+    let rotations = findAllBoardRotations(position);
+    return rotations[0] == 0;
+}
+
+function isThreeConnected(position) {
+    let winStates = gameConfig["winStates"];
+    for(let i = 0; i < winStates.length; i++) {
+        if(pos[winStates[i][0]] != "0"  && pos[winStates[i][0]] == pos[winStates[i][1]] && pos[winStates[i][1]] == pos[winStates[i][2]]) {
+            return parseInt(pos[winStates[i][0]]);
+        }       
+    }
+    return 0;
+}
+
