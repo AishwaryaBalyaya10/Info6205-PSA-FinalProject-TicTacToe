@@ -1,5 +1,10 @@
-table.moves tr,
+table.board {
+  margin: 3%;
+  width: 500px;
+  height: 300px;
+}
 
+table.moves tr,
 table.moves {
   border: 0;
 }
@@ -12,25 +17,30 @@ td.board {
   text-align: center;
   vertical-align: middle;
 }
+
 td.num {
   font-weight: bold;
   color: #000000;
 }
+
 table.board td {
   font-family: monospace;
   text-align: center;
   vertical-align: middle;
 }
+
 table.board:not(.large) td {
   font-size: 9px;
   width: 8px;
   height: 8px;
 }
+
 table.board.large td {
   font-size: 22px;
   width: 40px;
   height: 40px;
 }
+
 table.board.large {
   position: absolute;
   left: 105px;
@@ -56,50 +66,18 @@ table.board td.p4 {
 }
 .wins {
   border: 2px solid grey;
-  position: absolute;
-  width: 120px;
   height: 60px;
-  top: 200px;
   text-align: center;
 }
 .summary {
+  margin: 5%;
   border: 2px solid grey;
-  position: absolute;
-  width: 440px;
   height: 100px;
-  top: 300px;
-  left: 35px;
   text-align: center;
-  overflow: hidden;
-}
-.graph {
-  position: absolute;
-  top: 440px;
-  left: 35px;
-}
-.wins#n1 {
-  left: 35px;
-}
-.wins#n2 {
-  left: 195px;
-}
-.wins#n3 {
-  left: 355px;
 }
 .dis {
   font-size: 32px;
 }
 table.board td form {
   margin: 0px;
-}
-.players {
-  position: absolute;
-  left: 280px;
-  top: 30px;
-}
-.speed {
-  position: absolute;
-  top: 90px;
-  left: 280px;
-  text-align: left;
 }
