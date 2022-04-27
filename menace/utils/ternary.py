@@ -45,6 +45,6 @@ def gameToTernary(play: str) -> Ternary:
     return Ternary("".join(num))
 
 
-def ternaryToXand0(number: Ternary) -> List[str]:
+def ternaryToXandO(number: Ternary) -> List[str]:
     mapping = {"0": " ", "1": "O", "2": "X"}
     return [mapping[m] for m in str(number.number)]
