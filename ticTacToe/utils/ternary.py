@@ -22,15 +22,15 @@ class Ternary:
 
 
 def decimalToTernary(decimal: int) -> Ternary:
-    def _convert(d: int) -> str:
+    def convert(d: int) -> str:
         q = d / 3
         r = d % 3
         if q == 0:
             return ""
         else:
-            return _convert(int(q)) + str(int(r))
+            return convert(int(q)) + str(int(r))
 
-    ternary = _convert(decimal)
+    ternary = convert(decimal)
 
     return Ternary(ternary, decimal)
 

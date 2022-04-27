@@ -35,13 +35,13 @@ def minimax(board: Ternary, depth: int = 0, player: int = 2) -> Tuple[Ternary, i
     for a in actions:
         actionBoard = list(board.number)
         actionBoard[a] = str(activePlayer)
-        new_board = "".join(actionBoard)
-        _, scoredActions[new_board] = minimax(Ternary(new_board), depth, player)
+        newBoard = "".join(actionBoard)
+        _, scoredActions[newBoard] = minimax(Ternary(newBoard), depth, player)
 
     if player == activePlayer:
-        max_value = max(scoredActions.values())
-        max_boards = [b for b, v in scoredActions.items() if v == max_value]
-        return Ternary(np.random.choice(max_boards)), max_value
+        maxValue = max(scoredActions.values())
+        maxBoards = [b for b, v in scoredActions.items() if v == maxValue]
+        return Ternary(np.random.choice(maxBoards)), maxValue
     else:
         minValue = min(scoredActions.values())
         minBoards = [b for b, v in scoredActions.items() if v == minValue]
@@ -62,12 +62,12 @@ if __name__ == "__main__":
             else:
                 print(plot(_board))
                 logging.info(plot(_board))
-                _action = int(input("Human turn (0-8): "))
-                while _action not in np.where(np.array(list(_board.number)) == "0")[0]:
-                    _action = int(input(f"Action {_action} is already used, try new (0-8): "))
+                action = int(input("Human turn (0-8): "))
+                while action not in np.where(np.array(list(_board.number)) == "0")[0]:
+                    action = int(input(f"Action {action} is already used, try new (0-8): "))
 
                 _actionBoard = list(_board.number)
-                _actionBoard[_action] = str(_player)
+                _actionBoard[action] = str(_player)
 
                 _board = Ternary("".join(_actionBoard))
 
