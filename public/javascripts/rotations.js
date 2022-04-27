@@ -1,6 +1,7 @@
 
 const gameConfig = require("../../config");
 
+
 function applyGivenRotation(position, rotation) {
     let newPosition = "";
     for(let i = 0; i< 9 ; i++) {
@@ -35,7 +36,7 @@ function isMaxRotation(position) {
     return rotations[0] == 0;
 }
 
-function isThreeConnected(position) {
+function isWin(position) {
     let winStates = gameConfig["winStates"];
     for(let i = 0; i < winStates.length; i++) {
         if(pos[winStates[i][0]] != "0"  && pos[winStates[i][0]] == pos[winStates[i][1]] && pos[winStates[i][1]] == pos[winStates[i][2]]) {
