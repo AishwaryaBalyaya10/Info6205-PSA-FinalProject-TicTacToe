@@ -17,5 +17,5 @@ menace:
 	poetry run python ticTacToe/menace.py
 
 .PHONY: minmax
-menace:
+minmax:
 	poetry run python ticTacToe/minmax.py

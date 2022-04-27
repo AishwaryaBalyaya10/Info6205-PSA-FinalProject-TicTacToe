@@ -2,105 +2,49 @@
 
 # Introduction
 
-The aim of this project to implement the [MENACE: Machine Educable Noughts And Crosses Engine](https://en.wikipedia.org/wiki/Matchbox_Educable_Noughts_and_Crosses_Engine). Donald Michie, an artificial intelligence researcher, devised and built a mechanical computer out of 304 matchboxes in 1961 to train it in game of tic-tac-toe by playing againts human opponents. Given a source,destination and a mask image, our goal is to generate a realistic composite belnded image. We have used TensorFlow to implement this paper.
+The aim of this project to implement the [MENACE: Machine Educable Noughts And Crosses Engine](https://people.csail.mit.edu/brooks/idocs/matchbox.pdf). Donald Michie, an artificial intelligence researcher, devised and built a mechanical computer out of 304 matchboxes in 1961 to train it in game of tic-tac-toe by playing againts human opponents. Given a source,destination and a mask image, our goal is to generate a realistic composite belnded image. We have used TensorFlow to implement this paper.
 
 # Requirements
 
  - python3.8
  - poetry
+ - make
 
 # Table Of Contents
 
+-  [Installations](#installation)
+-  [Quick Start](#quick-starts)
 -  [Implementation Flow](#implementation-flow)
--  [Graphs and Images](#graphs-and-Images)
--  [Pitfalls and Challenges](#pitfalls-and-challenges)
--  [Future Work](#future-work)
 
-# Implementation Flow
+# Installations
+Please make sure you have installed python3.8, poetry and make for this project.
+-   [python3.8](https://www.python.org/downloads/release/python-380/)
+-   [poetry](https://python-poetry.org/docs/)
+-   make
 
-Here is how you can use this algorithm to create your own blended images from a source and destination image
+# Quick Start
+Please make sure you have installed python3.8 and poetry for this project.
 
-In `crop_aligned_images.py` file, we have created a function which crops the images so that the source destination and masked images have the same size. The input to this file is our aligned image dataset. The cropped files will be saved in the cropped_images folder
+- Download required libraries for the project
 
-```python
-  
-  for data_root in images:
-          mask = imread(data_root)
-          cropped_mask = mask[sx:ex, sy:ey]
-
-          mask_name = os.path.basename(data_root)
-          imsave(os.path.join(args.result_folder, name, mask_name), cropped_mask)
+```bash
+make requirements 
 ```
 
-In the `write_tf_records.py` file, the task of image blending is performed by a copy-paste function. It takes source image and destination images from the cropped_image folder and gives the output in a serialized format.
+- Train menace with random human moves
 
-```python
-def create_copy_pastes(root, folders, max_images, load_size, crop_size, crop_size_ratio, writer):
-    """
-    This function creates copy paste images from the object and background cropped images
-    """
-        obj_croped = _crop(obj, rw, rh, sx, sy, crop_size)
-        bg_croped = _crop(bg, rw, rh, sx, sy, crop_size)
-
-        copy_paste = bg_croped.copy()
-        copy_paste[sx_cp:sx_cp + size, sx_cp:sx_cp + size, :] = obj_croped[ sx_cp:sx_cp + size,
-                                                                            sx_cp:sx_cp + size, :]
+```bash
+make menace
 ```
 
-In `train_blending_gan.py` file, we have defined function to initialize a blending GAN and set training parameters. In order to increase the accuracy of the GAN, the training parameters could be changed to increase the number of iterations and snapshot_interval. After running this file, checkpoints are created which is the weight of the model 
+- Play with menace
 
-```python
-'''
-Code to initialize generator
-'''
-generator = EncoderDecoder(encoder_filters=args.nef, encoded_dims=args.nBottleneck, output_channels=args.nc,
-                               decoder_filters=args.ngf, is_training=True, image_size=args.image_size, skip=False, scope_name='generator') #, conv_init=init_conv,
-
-generator_val = EncoderDecoder(encoder_filters=args.nef, encoded_dims=args.nBottleneck, output_channels=args.nc,
-                               decoder_filters=args.ngf, is_training=False, image_size=args.image_size, skip=False, scope_name='generator')
-
+```bash
+make minmax
 ```
-```python
-'''
-Code to initialize discriminator
-'''
-discriminator = DCGAN_D(image_size=args.image_size, encoded_dims=1, filters=args.ndf, is_training=True, scope_name='discriminator') #, conv_init=init_conv, bn_init=init_bn)  # D
 
-discriminator_val = DCGAN_D(image_size=args.image_size, encoded_dims=1, filters=args.ndf, is_training=False,
-                           scope_name='discriminator')
+- Run test cases
 
+```bash
+make test
 ```
-In the `run_gp_gan.py`file, we take the source image, destination image, masked image and the weights from the trained model, to perform blending using the GP-GAN. The result image will be stored as a result.jpg
-
-```python
-
-from gp_gan import gp_gan
-blended_im = gp_gan(obj, bg, mask, gan_im_tens, inputdata, sess, args.image_size, color_weight=args.color_weight,
-                            sigma=args.sigma,
-                            gradient_kernel=args.gradient_kernel, smooth_sigma=args.smooth_sigma)
-```
-# Graphs and Images
-
- Tensorflow graphs
- 
- <img src="https://github.com/DefCon-init/GP-GANs/blob/master/DataBase/example_results/merge_from_ofoct.jpg" width="1500" height="1500">
- 
- Under images you will find image samples from the training process: 
- 
- | <img src="https://github.com/DefCon-init/GP-GANs/blob/master/DataBase/example_results/composed_image_1.PNG" width="250" height="250"> | <img src="https://github.com/DefCon-init/GP-GANs/blob/master/DataBase/example_results/composed_image_2.PNG" width="250" height="250"> | <img src="https://github.com/DefCon-init/GP-GANs/blob/master/DataBase/example_results/real_image_1.PNG" width="250" height="250"> | <img src="https://github.com/DefCon-init/GP-GANs/blob/master/DataBase/example_results/real_image_2.PNG" width="250" height="250">
- 
-# Results
-
-| Source | Destination | Mask | Composited | Blended |
-| --- | --- | --- | --- | --- |
-| ![](DataBase/test_images/src.jpg) | ![](DataBase/test_images/dst.jpg) | ![](DataBase/test_images/mask_display.png) | ![](DataBase/test_images/copy-paste.png) | ![](DataBase/test_images/result.jpg) |
-
-# Pitfalls and Challenges
-
-We encountered compatibility issues while running the code due to mismatch between the tensorflow versions. Due to hardware constraints, this version of the code does not create images with very good resolution. This algorithm failes to generate realistic image when the composite images are far from the distribution of the training dataset
-
-# Future Work
-
-Inorder to create blended images with greater resolution, the code can be tweaked to increase the number of steps and cycles to a greater value.
-Currently the scope of this implementation is limited to using supervised learning. As a future scope, this can be implemented using unsupervised learning techniques. 
-   
