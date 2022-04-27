@@ -45,7 +45,7 @@ def minimax(board: Ternary, depth: int = 0, player: int = 2) -> Tuple[Ternary, i
 
 
 if __name__ == "__main__":
-    playAgain = True
+    playAgain = False
     while playAgain:
         _board = Ternary("0" * 9)
         _winner = -1
