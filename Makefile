@@ -15,3 +15,7 @@ format: requirements_tools
 .PHONY: menace
 menace:
 	poetry run python ticTacToe/menace.py
+
+.PHONY: minmax
+menace:
+	poetry run python ticTacToe/minmax.py
