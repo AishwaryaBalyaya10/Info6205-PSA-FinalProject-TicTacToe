@@ -13,5 +13,9 @@ format: requirements_tools
 	poetry run black .
 
 .PHONY: menace_train
-run_rl:
-	 poetry run python ticTacToe/learning.py
+menace_train:
+	poetry run python ticTacToe/learning.py
+
+.PHONY: menace_play
+menace_play:
+	poetry run python ticTacToe/menace.py
