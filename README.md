@@ -14,7 +14,6 @@ The aim of this project to implement the [MENACE: Machine Educable Noughts And C
 
 - [Installations](#installation)
 - [Quick Start](#quick-starts)
-- [Implementation Flow](#implementation-flow)
 - [Folder Structure](#folder-structure)
 - [Inspirations](#implementation-flow)
 
@@ -53,7 +52,6 @@ make minmax
 ```bash
 make test
 ```
-
 ## Folder Structure
 
 ### Top-level directory layout
@@ -70,7 +68,7 @@ make test
 
     .
     ├── ...
-    ├── ticTacToe               
+    ├── ticTacToe
     │   ├── utils               # Helper files
     │   ├── menace              # Random human moves with menace
     │   └── minmax              # Human play with menace
@@ -89,9 +87,4 @@ make test
 ## References
 
 [1] Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
-and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf  
-[2] S Michie, D. (1961) "Trial and error". Penguin Science Survey.  
-[3] Sutton, R. S. & Barto, A. G. (2018), "Reinforcement Learning: An Introduction", The MIT Press.  
-[4] Mitchell, M. (2019), "Artificial intelligence a guide for thinking humans", Pelican books  
-[5] Scroggs, M. (2015), "MENACE: Machine Educable Noughts And Crosses Engine"  
-[6] Luce, R. D. & Raiffa, H. (1957). "Games and decisions: Introduction and critical survey". New York: Wiley.
+and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
