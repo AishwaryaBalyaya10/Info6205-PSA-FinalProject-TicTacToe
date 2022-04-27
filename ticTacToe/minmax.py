@@ -1,4 +1,5 @@
 import numpy as np
+import logging
 from typing import Dict, Tuple
 
 from ticTacToe.utils.plot import plot
@@ -23,29 +24,29 @@ def minimax(board: Ternary, depth: int = 0, player: int = 2) -> Tuple[Ternary, i
         return board, score
 
     depth += 1
-    scored_actions: Dict = {}
+    scoredActions: Dict = {}
     actions = np.where(np.array(list(board.number)) == "0")[0]
-    active_player = len(actions) % 2 + 1
+    activePlayer = len(actions) % 2 + 1
 
     for a in actions:
-        action_board = list(board.number)
-        action_board[a] = str(active_player)
-        new_board = "".join(action_board)
-        _, scored_actions[new_board] = minimax(Ternary(new_board), depth, player)
+        actionBoard = list(board.number)
+        actionBoard[a] = str(activePlayer)
+        new_board = "".join(actionBoard)
+        _, scoredActions[new_board] = minimax(Ternary(new_board), depth, player)
 
-    if player == active_player:
-        max_value = max(scored_actions.values())
-        max_boards = [b for b, v in scored_actions.items() if v == max_value]
+    if player == activePlayer:
+        max_value = max(scoredActions.values())
+        max_boards = [b for b, v in scoredActions.items() if v == max_value]
         return Ternary(np.random.choice(max_boards)), max_value
     else:
-        min_value = min(scored_actions.values())
-        min_boards = [b for b, v in scored_actions.items() if v == min_value]
-        return Ternary(np.random.choice(min_boards)), min_value
+        minValue = min(scoredActions.values())
+        minBoards = [b for b, v in scoredActions.items() if v == minValue]
+        return Ternary(np.random.choice(minBoards)), minValue
 
 
 if __name__ == "__main__":
-    play_again = True
-    while play_again:
+    playAgain = True
+    while playAgain:
         _board = Ternary("0" * 9)
         _winner = -1
         _turn = 1
@@ -60,10 +61,10 @@ if __name__ == "__main__":
                 while _action not in np.where(np.array(list(_board.number)) == "0")[0]:
                     _action = int(input(f"Action {_action} is already used, try new (0-8): "))
 
-                _action_board = list(_board.number)
-                _action_board[_action] = str(_player)
+                _actionBoard = list(_board.number)
+                _actionBoard[_action] = str(_player)
 
-                _board = Ternary("".join(_action_board))
+                _board = Ternary("".join(_actionBoard))
 
             _winner = determineWinner(_board)
             _turn += 1
@@ -71,4 +72,4 @@ if __name__ == "__main__":
         print(f"\nWinner: {_winner}\n")
         print(plot(_board))
 
-        play_again = input("Play again [y/n]: ") == "y"
+        playAgain = input("Play again [y/n]: ") == "y"
