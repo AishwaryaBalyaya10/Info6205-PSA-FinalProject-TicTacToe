@@ -13,7 +13,7 @@ from ticTacToe.utils.combinations import (
 
 np.set_printoptions(suppress=True)
 
-logging.basicConfig(filename='menace.log', level=logging.INFO, filemode='a', format='%(asctime)s - %(msecs)d %(name)s %(levelname)s %(message)s',
+logging.basicConfig(filename='logs/menace.log', level=logging.INFO, filemode='a', format='%(asctime)s - %(msecs)d %(name)s %(levelname)s %(message)s',
                     datefmt='%H:%M:%S')
 
 # D. Michie used 4, 3, 2, 1 / 8, 4, 2, 1
@@ -120,7 +120,7 @@ def randomHumanMoves(board: Ternary, player: int = 1) -> Tuple[Ternary, int]:
     return Ternary("".join(board_list)), action
 
 
-def train(num_rounds=500):
+def train(num_rounds=100):
     for r in range(1, num_rounds + 1):
         board = Ternary("0" * 9)
         winner = -1
@@ -136,7 +136,7 @@ def train(num_rounds=500):
                 menace_actions.append((action, symmetry_class))
             else:
                 board, _ = randomHumanMoves(board)
-            
+
             game = str(board)
 
             turn += 1
@@ -154,6 +154,7 @@ def train(num_rounds=500):
 
 
 if __name__ == "__main__":
+    count = 0
     initMenace()
     logging.info("-------------------------")
     logging.info("Training...")
@@ -164,11 +165,11 @@ if __name__ == "__main__":
     logging.info("-------------------------")
     print("Training finished!")
     print("-------------------------")
-    print("Human Moves vs Menace")
-    logging.info("Human Moves vs Menace")
-
+    
     play_again = True
     while play_again:
+        print("Human Moves vs Menace game count - " + str(count))
+        logging.info("Human Moves vs Menace game count - " + str(count))
         _board = Ternary("0" * 9)
         _winner = -1
         _turn = 1
@@ -198,7 +199,8 @@ if __name__ == "__main__":
 
         print(f"\nWinner: {'Menace' if _winner == 2 else 'Human'}\n")
         print(plot(_board))
-        logging.info(f"\nWinner: {'Menace' if _winner == 2 else 'Human'}\n")
+        logging.info(f"Winner: {'Menace' if _winner == 2 else 'Human'}")
         logging.info("\n" + plot(_board))
 
-        play_again = input("Play again [y/n]: ") == "y"
+        count = count + 1
+        play_again = count < 100

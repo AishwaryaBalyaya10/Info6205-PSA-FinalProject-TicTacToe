@@ -6,29 +6,34 @@ The aim of this project to implement the [MENACE: Machine Educable Noughts And C
 
 # Requirements
 
- - python3.8
- - poetry
- - make
+- python3.8
+- poetry
+- make
 
 # Table Of Contents
 
--  [Installations](#installation)
--  [Quick Start](#quick-starts)
--  [Implementation Flow](#implementation-flow)
+- [Installations](#installation)
+- [Quick Start](#quick-starts)
+- [Implementation Flow](#implementation-flow)
+- [Folder Structure](#folder-structure)
+- [Inspirations](#implementation-flow)
 
 # Installations
+
 Please make sure you have installed python3.8, poetry and make for this project.
--   [python3.8](https://www.python.org/downloads/release/python-380/)
--   [poetry](https://python-poetry.org/docs/)
--   make
+
+- [python3.8](https://www.python.org/downloads/release/python-380/)
+- [poetry](https://python-poetry.org/docs/)
+- make
 
 # Quick Start
+
 Please make sure you have installed python3.8 and poetry for this project.
 
 - Download required libraries for the project
 
 ```bash
-make requirements 
+make requirements
 ```
 
 - Train menace with random human moves
@@ -48,3 +53,45 @@ make minmax
 ```bash
 make test
 ```
+
+## Folder Structure
+
+### Top-level directory layout
+
+    .
+    ├── logs                    # Log files
+    ├── docs                    # Documentation files
+    ├── ticTacToe               # Source files
+    ├── tests                   # Automated tests
+    ├── LICENSE
+    └── README.md
+
+### Source files
+
+    .
+    ├── ...
+    ├── ticTacToe               
+    │   ├── utils               # Helper files
+    │   ├── menace              # Random human moves with menace
+    │   └── minmax              # Human play with menace
+    └── ...
+
+### Automated tests
+
+    .
+    ├── ...
+    ├── test                     # Test files
+    │   ├── test_combinations    # Unit test cases for combinations
+    │   ├── test_plot            # Unit test cases for plot
+    │   └── test_ternary         # Unit test cases for ternary
+    └── ...
+
+## References
+
+[1] Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
+and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf  
+[2] S Michie, D. (1961) "Trial and error". Penguin Science Survey.  
+[3] Sutton, R. S. & Barto, A. G. (2018), "Reinforcement Learning: An Introduction", The MIT Press.  
+[4] Mitchell, M. (2019), "Artificial intelligence a guide for thinking humans", Pelican books  
+[5] Scroggs, M. (2015), "MENACE: Machine Educable Noughts And Crosses Engine"  
+[6] Luce, R. D. & Raiffa, H. (1957). "Games and decisions: Introduction and critical survey". New York: Wiley.
