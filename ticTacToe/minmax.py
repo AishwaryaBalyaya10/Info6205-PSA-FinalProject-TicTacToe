@@ -1,12 +1,12 @@
 import numpy as np
 from typing import Dict, Tuple
 
-from utils.plot import plot
-from utils.ternary import Ternary
-from utils.combinations import determineWinner
+from ticTacToe.utils.plot import plot
+from ticTacToe.utils.ternary import Ternary
+from ticTacToe.utils.combinations import determineWinner
 
 
-def score(board: Ternary, depth: int, player: int = 2) -> Tuple[int, bool]:
+def getScore(board: Ternary, depth: int, player: int = 2) -> Tuple[int, bool]:
     winner = determineWinner(board)
 
     if winner == player:
@@ -18,30 +18,29 @@ def score(board: Ternary, depth: int, player: int = 2) -> Tuple[int, bool]:
 
 
 def minimax(board: Ternary, depth: int = 0, player: int = 2) -> Tuple[Ternary, int]:
-    score, ended = determineWinner(board, depth, player)
-
+    score, ended = getScore(board, depth, player)
     if score != 0 or ended:
         return board, score
 
     depth += 1
-    actionsScored: Dict = {}
+    scored_actions: Dict = {}
     actions = np.where(np.array(list(board.number)) == "0")[0]
-    playerActive = len(actions) % 2 + 1
+    active_player = len(actions) % 2 + 1
 
     for a in actions:
         action_board = list(board.number)
-        action_board[a] = str(playerActive)
-        newBoard = "".join(action_board)
-        _, actionsScored[newBoard] = minimax(Ternary(newBoard), depth, player)
+        action_board[a] = str(active_player)
+        new_board = "".join(action_board)
+        _, scored_actions[new_board] = minimax(Ternary(new_board), depth, player)
 
-    if player == playerActive:
-        maxValue = max(actionsScored.values())
-        maxBoards = [b for b, v in actionsScored.items() if v == maxValue]
-        return Ternary(np.random.choice(maxBoards)), maxValue
+    if player == active_player:
+        max_value = max(scored_actions.values())
+        max_boards = [b for b, v in scored_actions.items() if v == max_value]
+        return Ternary(np.random.choice(max_boards)), max_value
     else:
-        minValue = min(actionsScored.values())
-        minBoards = [b for b, v in actionsScored.items() if v == minValue]
-        return Ternary(np.random.choice(minBoards)), minValue
+        min_value = min(scored_actions.values())
+        min_boards = [b for b, v in scored_actions.items() if v == min_value]
+        return Ternary(np.random.choice(min_boards)), min_value
 
 
 if __name__ == "__main__":
