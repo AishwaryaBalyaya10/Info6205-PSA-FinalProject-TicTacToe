@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "menace"
+name = "ticTacToe"
 version = "0.1.0"
 description = ""
 authors = ["Shubhang Shah <shubhang34@gmail.com>"]

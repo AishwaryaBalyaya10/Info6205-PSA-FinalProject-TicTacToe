@@ -27,7 +27,7 @@ Please make sure you have installed python3.8, poetry and make for this project.
 
 # Quick Start
 
-Please make sure you have installed python3.8 and poetry for this project.
+We use `Poetry` on Python 3.8 and each method can be run using
 
 - Download required libraries for the project
 
@@ -86,5 +86,12 @@ make test
 
 ## References
 
-[1] Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
+- https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
+- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
+and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
+- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
+and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
+- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
+and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
+- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
 and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
