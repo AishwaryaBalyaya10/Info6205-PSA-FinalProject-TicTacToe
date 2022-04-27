@@ -120,7 +120,7 @@ def randomHumanMoves(board: Ternary, player: int = 1) -> Tuple[Ternary, int]:
     return Ternary("".join(board_list)), action
 
 
-def train(num_rounds=200):
+def train(num_rounds=500):
     for r in range(1, num_rounds + 1):
         board = Ternary("0" * 9)
         winner = -1
@@ -148,7 +148,7 @@ def train(num_rounds=200):
         if r % (num_rounds // 10) == 0:
             action_histogram = {a: len(np.where(np.array(MENACE_MEMORY[0]["0" * 9]) == a)[0]) for a in range(9)}
             logging.info(f"\nGame: {game}, winner: {winner}, round: {r}\n")
-            logging.info(valuePlotting(Ternary("0" * 9), action_histogram, decimal=False))
+            logging.info("\n" + valuePlotting(Ternary("0" * 9), action_histogram, decimal=False))
             print(f"\nGame: {game}, winner: {winner}, round: {r}\n")
             print(valuePlotting(Ternary("0" * 9), action_histogram, decimal=False))
 
@@ -161,6 +161,7 @@ if __name__ == "__main__":
     print("Training...")
     train()
     logging.info("Training finished!")
+    logging.info("-------------------------")
     print("Training finished!")
     print("-------------------------")
     print("Human Moves vs Menace")
@@ -179,11 +180,15 @@ if __name__ == "__main__":
             if _player == 2:
                 print(_action_values)
                 print(valuePlotting(_board, _action_values, decimal=False))
+                logging.info(_action_values)
+                logging.info("\n" + valuePlotting(_board, _action_values, decimal=False))
                 _board, _action, _symmetry_class, _action_values = menaceMove(_board)
                 _menace_actions.append((_action, _symmetry_class))
 
             else:
                 print(plot(_board))
+                logging.info("Human moves")
+                logging.info("\n" + plot(_board))
                 _board, _ = randomHumanMoves(_board)
 
             _winner = determineWinner(_board)
@@ -193,5 +198,7 @@ if __name__ == "__main__":
 
         print(f"\nWinner: {'Menace' if _winner == 2 else 'Human'}\n")
         print(plot(_board))
+        logging.info(f"\nWinner: {'Menace' if _winner == 2 else 'Human'}\n")
+        logging.info("\n" + plot(_board))
 
         play_again = input("Play again [y/n]: ") == "y"
