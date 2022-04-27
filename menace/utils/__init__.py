@@ -1,0 +1,1 @@
+from .ternary import Ternary, decimalToTernary, gameToTernary
