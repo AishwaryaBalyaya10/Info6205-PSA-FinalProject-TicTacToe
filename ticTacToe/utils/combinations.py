@@ -1,7 +1,7 @@
 import numpy as np
 from typing import List, Tuple, Set
 
-from menace.utils.ternary import Ternary
+from ticTacToe.utils.ternary import Ternary
 
 
 SYMMETRICAL_COMBINATIONS = [

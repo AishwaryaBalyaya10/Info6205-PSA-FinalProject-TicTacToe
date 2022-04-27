@@ -11,3 +11,7 @@ test: requirements
 .PHONY: format
 format: requirements_tools
 	poetry run black .
+
+.PHONY: menace_train
+run_rl:
+	poetry run python menace/learning.py
