@@ -1,4 +1,5 @@
 import numpy as np
+import logging
 from typing import Tuple, Dict, List
 
 from ticTacToe.utils.ternary import Ternary
@@ -11,6 +12,9 @@ from ticTacToe.utils.combinations import (
 )
 
 np.set_printoptions(suppress=True)
+
+logging.basicConfig(filename='menace.log', level=logging.INFO, filemode='a', format='%(asctime)s - %(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S')
 
 # D. Michie used 4, 3, 2, 1 / 8, 4, 2, 1
 REPLICAS_PER_STAGE = [8, 4, 2, 1]
@@ -42,10 +46,8 @@ def initMenace():
     board_classes, _ = getAllPossibleBoards()
     for stage, boards in enumerate(board_classes[:-2]):
         turn = stage // 2
-
         for b in boards:
             actions = np.where(np.array(list(b)) == "0")[0] if stage > 0 else np.array([0, 1, 2])
-
             MENACE_MEMORY[stage % 2][b] = []
 
             for a in actions:
@@ -118,20 +120,24 @@ def randomHumanMoves(board: Ternary, player: int = 1) -> Tuple[Ternary, int]:
     return Ternary("".join(board_list)), action
 
 
-def train(num_rounds=100):
+def train(num_rounds=200):
     for r in range(1, num_rounds + 1):
         board = Ternary("0" * 9)
         winner = -1
         turn = 1
+        game = ""
         menace_actions = []
 
         while winner < 0:
             player = turn % 2 + 1
+
             if player == 2:
                 board, action, symmetry_class, _ = menaceMove(board)
                 menace_actions.append((action, symmetry_class))
             else:
                 board, _ = randomHumanMoves(board)
+            
+            game = str(board)
 
             turn += 1
 
@@ -141,16 +147,24 @@ def train(num_rounds=100):
         # Logging
         if r % (num_rounds // 10) == 0:
             action_histogram = {a: len(np.where(np.array(MENACE_MEMORY[0]["0" * 9]) == a)[0]) for a in range(9)}
+            logging.info(f"\nGame: {game}, winner: {winner}, round: {r}\n")
+            logging.info(valuePlotting(Ternary("0" * 9), action_histogram, decimal=False))
+            print(f"\nGame: {game}, winner: {winner}, round: {r}\n")
             print(valuePlotting(Ternary("0" * 9), action_histogram, decimal=False))
 
 
 if __name__ == "__main__":
     initMenace()
+    logging.info("-------------------------")
+    logging.info("Training...")
+    print("-------------------------")
     print("Training...")
     train()
+    logging.info("Training finished!")
     print("Training finished!")
     print("-------------------------")
-    print("Human vs Menace")
+    print("Human Moves vs Menace")
+    logging.info("Human Moves vs Menace")
 
     play_again = True
     while play_again:
@@ -177,7 +191,7 @@ if __name__ == "__main__":
 
         menaceTrain(_menace_actions, _winner)
 
-        print(f"\nWinner: {_winner}\n")
+        print(f"\nWinner: {'Menace' if _winner == 2 else 'Human'}\n")
         print(plot(_board))
 
         play_again = input("Play again [y/n]: ") == "y"

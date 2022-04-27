@@ -7,6 +7,7 @@ The aim of this project to implement the [MENACE: Machine Educable Noughts And C
 # Requirements
 
  - python3.8
+ - poetry
 
 # Table Of Contents
 

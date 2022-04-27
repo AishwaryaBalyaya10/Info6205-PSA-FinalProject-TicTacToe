@@ -5,14 +5,14 @@ from ticTacToe.utils.ternary import Ternary
 
 
 SYMMETRICAL_COMBINATIONS = [
-    np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]),  
-    np.array([0, 7, 8, 1, 2, 3, 4, 5, 6]),  
-    np.array([0, 5, 6, 7, 8, 1, 2, 3, 4]),  
-    np.array([0, 3, 4, 5, 6, 7, 8, 1, 2]),  
-    np.array([0, 7, 6, 5, 4, 3, 2, 1, 8]),  
-    np.array([0, 3, 2, 1, 8, 7, 6, 5, 4]),  
-    np.array([0, 1, 8, 7, 6, 5, 4, 3, 2]),  
-    np.array([0, 5, 4, 3, 2, 1, 8, 7, 6]),  
+    np.array([0, 1, 2, 3, 4, 5, 6, 7, 8]),
+    np.array([0, 3, 6, 1, 4, 7, 2, 5, 8]),
+    np.array([6, 3, 0, 7, 4, 1, 8, 5, 2]),
+    np.array([6, 7, 8, 3, 4, 5, 0, 1, 2]),
+    np.array([8, 7, 6, 5, 4, 3, 2, 1, 0]),
+    np.array([8, 5, 2, 7, 4, 1, 6, 3, 0]),
+    np.array([2, 5, 8, 1, 4, 7, 0, 3, 6]),
+    np.array([2, 1, 0, 5, 4, 3, 8, 7, 6]),
 ]
 
 
@@ -64,14 +64,14 @@ def getAllPossibleBoards(player_start: int = 2, exclude_winners: bool = True) ->
 
 def determineWinner(board: Ternary) -> int:
     winningWays = [
-        board.number[1] + board.number[0] + board.number[5],  
-        board.number[3] + board.number[0] + board.number[7],  
-        board.number[1] + board.number[8] + board.number[7],  
-        board.number[2] + board.number[0] + board.number[6],  
-        board.number[3] + board.number[4] + board.number[5],  
-        board.number[1] + board.number[2] + board.number[3],  
-        board.number[8] + board.number[0] + board.number[4],  
-        board.number[7] + board.number[6] + board.number[5],  
+        board.number[0] + board.number[1] + board.number[2],
+        board.number[3] + board.number[4] + board.number[5],
+        board.number[6] + board.number[7] + board.number[8],
+        board.number[0] + board.number[3] + board.number[6],
+        board.number[1] + board.number[4] + board.number[7],
+        board.number[2] + board.number[5] + board.number[8],
+        board.number[0] + board.number[4] + board.number[8],
+        board.number[6] + board.number[4] + board.number[2],
     ]
 
     # Check if winner is X or O
