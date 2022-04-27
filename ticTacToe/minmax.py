@@ -6,6 +6,10 @@ from ticTacToe.utils.plot import plot
 from ticTacToe.utils.ternary import Ternary
 from ticTacToe.utils.combinations import determineWinner
 
+logging.basicConfig(filename='logs/minmax.log', level=logging.INFO, filemode='a', format='%(asctime)s - %(msecs)d %(name)s %(levelname)s %(message)s',
+                    datefmt='%H:%M:%S')
+
+
 
 def getScore(board: Ternary, depth: int, player: int = 2) -> Tuple[int, bool]:
     winner = determineWinner(board)
@@ -57,6 +61,7 @@ if __name__ == "__main__":
                 _board, _ = minimax(_board)
             else:
                 print(plot(_board))
+                logging.info(plot(_board))
                 _action = int(input("Human turn (0-8): "))
                 while _action not in np.where(np.array(list(_board.number)) == "0")[0]:
                     _action = int(input(f"Action {_action} is already used, try new (0-8): "))
@@ -69,7 +74,11 @@ if __name__ == "__main__":
             _winner = determineWinner(_board)
             _turn += 1
 
+        logging.info("Turns " + str(_turn))
+
         print(f"\nWinner: {_winner}\n")
+        logging.info(f"\nWinner: {_winner}\n")
         print(plot(_board))
+        logging.info(plot(_board))
 
         playAgain = input("Play again [y/n]: ") == "y"
