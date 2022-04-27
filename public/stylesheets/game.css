@@ -1,7 +1,62 @@
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  background-image: linear-gradient(rgb(249, 156, 43), rgb(255, 137, 10));
+  transition: 0.3s;
+  color: rgb(2, 2, 2);
+  margin-top: 40px;
+  left: 34%;
+}
+.summary {
+  /* Add shadows to create the "card" effect */
+  transition: 0.3s;
+  margin-bottom: 10px;
+  left: -2%;
+}
+
+
+.summary:hover{
+  box-shadow: 0 8px 15px 0 rgba(0,0,0,0.2);
+  transition: box-shadow 0.3s ease-in-out;
+}
+.row:hover{
+  box-shadow: 0 8px 15px 0 rgba(0,0,0,0.2);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+small.row:hover{
+background-color: #000000;
+}
+
+.card-body:hover{
+  color: rgb(9, 9, 9);
+  font-size: large;
+  transition: 0.3s;
+  font-size: large;
+}
+.container{
+  background-image: linear-gradient(rgb(249, 156, 43), rgb(255, 137, 10));
+}
+
 table.board {
   margin: 3%;
   width: 500px;
   height: 300px;
+  margin-left: 25%;
+  
+}
+
+td.p0:hover,td.p1:hover,td.p2:hover,td.p3:hover,td.p4:hover,td.p5:hover,td.p6:hover,td.p7:hover,td.p8:hover{
+  box-shadow: 0 8px 15px 0 rgba(0,0,0,0.2);
+  background-color: #000000;
+  opacity: 0.5;
+  transition: 0.1s;
+}
+
+table.board:hover{
+  box-shadow: 0 8px 15px 0 rgba(0,0,0,0.2);
+  background-image: linear-gradient(rgb(125, 62, 6), rgb(255, 137, 10));
+  transition: 0.1s;
 }
 
 table.moves tr,
@@ -11,16 +66,15 @@ table.moves {
 
 td.board {
   font-family: monospace;
-  border: 1px solid black;
   width: 35px;
   height: 35px;
   text-align: center;
   vertical-align: middle;
 }
 
-td.num {
+td.p0,td.p1,td.p2,td.p3,td.p4,td.p5,td.p6,td.p7,td.p8 {
   font-weight: bold;
-  color: #000000;
+  color: #ffffff;
 }
 
 table.board td {
