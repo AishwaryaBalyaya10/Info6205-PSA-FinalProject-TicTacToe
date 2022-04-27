@@ -58,7 +58,7 @@ if __name__ == "__main__":
                 print(plot(_board))
                 _action = int(input("Human turn (0-8): "))
                 while _action not in np.where(np.array(list(_board.number)) == "0")[0]:
-                    _action = int(input(f"Action {_action} is already used, try new (0-9): "))
+                    _action = int(input(f"Action {_action} is already used, try new (0-8): "))
 
                 _action_board = list(_board.number)
                 _action_board[_action] = str(_player)
