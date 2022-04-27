@@ -128,21 +128,7 @@ def train(num_rounds=100):
         game = ""
         menace_actions = []
 
-        while winner < 0:
-            player = turn % 2 + 1
-
-            if player == 2:
-                board, action, symmetry_class, _ = menaceMove(board)
-                menace_actions.append((action, symmetry_class))
-            else:
-                board, _ = randomHumanMoves(board)
-
-            game = str(board)
-
-            turn += 1
-
-            winner = determineWinner(board)
-            menaceTrain(menace_actions, winner)
+        
 
         # Logging
         if r % (num_rounds // 10) == 0:
