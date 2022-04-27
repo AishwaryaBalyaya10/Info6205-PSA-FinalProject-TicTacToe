@@ -1,9 +1,9 @@
 import numpy as np
 from typing import Tuple, Dict, List
 
-from utils.ternary import Ternary
-from utils.plot import plot, plot_values
-from utils.combinations import (
+from ticTacToe.utils.ternary import Ternary
+from ticTacToe.utils.plot import plot, valuePlotting
+from ticTacToe.utils.combinations import (
     determineWinner,
     getAllPossibleBoards,
     getBoardSymmetries,
@@ -22,13 +22,13 @@ class MenaceException(Exception):
     pass
 
 
-def getPossibleOptions(boardClasses: List, board: str, stage: int) -> List:
+def getActions(board_classes: List, board: str, stage: int) -> List:
     if stage == 7:
         return np.where(np.array(list(board)) == "0")[0]
 
     actions = []
 
-    for b in boardClasses[stage + 1]:
+    for b in board_classes[stage + 1]:
         diff = Ternary(board) - Ternary(b)
         not_null = np.where(np.array(list(diff)) != "0")[0]
 
@@ -38,9 +38,9 @@ def getPossibleOptions(boardClasses: List, board: str, stage: int) -> List:
     return np.array(actions)
 
 
-def initiate_menace_memory():
-    boardClasses, _ = getAllPossibleBoards()
-    for stage, boards in enumerate(boardClasses[:-2]):
+def initMenace():
+    board_classes, _ = getAllPossibleBoards()
+    for stage, boards in enumerate(board_classes[:-2]):
         turn = stage // 2
 
         for b in boards:
@@ -53,42 +53,42 @@ def initiate_menace_memory():
 
 
 def menaceMove(board: Ternary, player: int = 2) -> Tuple[Ternary, int, str, Dict]:
-    boardList = list(board.number)
-    actions = np.where(np.array(boardList) == "0")[0]
+    board_list = list(board.number)
+    actions = np.where(np.array(board_list) == "0")[0]
 
     if len(actions) == 1:
-        boardList[actions[0]] = str(player)
-        return Ternary("".join(boardList)), actions[0], board.number, {a: 0 for a in range(9)}
+        board_list[actions[0]] = str(player)
+        return Ternary("".join(board_list)), actions[0], board.number, {a: 0 for a in range(9)}
 
-    symmetryClass = None
-    symmetryElement = SYMMETRICAL_COMBINATIONS[0]
+    symmetry_class = None
+    symmetry_element = SYMMETRICAL_COMBINATIONS[0]
 
     if board.number in MENACE_MEMORY[player % 2]:
-        symmetryClass = board.number
+        symmetry_class = board.number
     else:
         for e, s in enumerate(getBoardSymmetries(board.number)):
             if s in MENACE_MEMORY[player % 2]:
-                symmetryClass = s
-                symmetryElement = SYMMETRICAL_COMBINATIONS[e]
+                symmetry_class = s
+                symmetry_element = SYMMETRICAL_COMBINATIONS[e]
 
-    if symmetryClass is None:
+    if symmetry_class is None:
         raise MenaceException(f"Any symmetry class found for {board.number} in MENACE's memory")
 
     try:
-        action = np.random.choice(MENACE_MEMORY[player % 2][symmetryClass])
+        action = np.random.choice(MENACE_MEMORY[player % 2][symmetry_class])
     except ValueError:
-        raise MenaceException("MENACE's memory has died out")
+        raise MenaceException("MENACE's memory dies out 😭")
 
-    actionForOriginalBoard = symmetryElement[action]
-    boardList[actionForOriginalBoard] = str(player)
+    action_on_original_board = symmetry_element[action]
+    board_list[action_on_original_board] = str(player)
 
     action_histogram = {
-        a: len(np.where(np.array(MENACE_MEMORY[player % 2][symmetryClass]) == a)[0]) + 0.1 for a in range(9)
+        a: len(np.where(np.array(MENACE_MEMORY[player % 2][symmetry_class]) == a)[0]) + 0.1 for a in range(9)
     }
-    return Ternary("".join(boardList)), action, symmetryClass, action_histogram
+    return Ternary("".join(board_list)), action, symmetry_class, action_histogram
 
 
-def makeMenaceLearn(history: List, winner: int, player: int = 2) -> None:
+def menaceTrain(history: List, winner: int, player: int = 2) -> None:
     if len(history) == 5:
         history = history[:-1]
 
@@ -97,38 +97,28 @@ def makeMenaceLearn(history: List, winner: int, player: int = 2) -> None:
         return
 
     if winner not in [player, 0]:
-        for action, symmetryClass in history:
+        for action, symmetry_class in history:
             for _ in range(abs(REWARDS["lost"])):
-                MENACE_MEMORY[player % 2][symmetryClass].remove(action)
+                MENACE_MEMORY[player % 2][symmetry_class].remove(action)
 
         return
 
     result = "won" if winner == player else "draw"
-    for action, symmetryClass in history:
-        MENACE_MEMORY[player % 2][symmetryClass].extend([action] * REWARDS[result])
+    for action, symmetry_class in history:
+        MENACE_MEMORY[player % 2][symmetry_class].extend([action] * REWARDS[result])
 
     return
 
 
-def randomPlayer(board: Ternary, player: int = 1) -> Tuple[Ternary, int]:
-    boardList = list(board.number)
-    actions = np.where(np.array(boardList) == "0")[0]
+def randomHumanMoves(board: Ternary, player: int = 1) -> Tuple[Ternary, int]:
+    board_list = list(board.number)
+    actions = np.where(np.array(board_list) == "0")[0]
     action = np.random.choice(actions)
-    boardList[action] = str(player)
-    return Ternary("".join(boardList)), action
+    board_list[action] = str(player)
+    return Ternary("".join(board_list)), action
 
 
-def humanPlayer(board: Ternary, player: int = 1) -> Tuple[Ternary, int]:
-    boardList = list(board.number)
-    action = int(input("Human turn (0-8): "))
-    while action not in np.where(np.array(list(board.number)) == "0")[0]:
-        action = int(input(f"Action {action} is already used, try new (0-9): "))
-
-    boardList[action] = str(player)
-    return Ternary("".join(boardList)), action
-
-
-def trainMenace(num_rounds=100):
+def train(num_rounds=100):
     for r in range(1, num_rounds + 1):
         board = Ternary("0" * 9)
         winner = -1
@@ -138,27 +128,27 @@ def trainMenace(num_rounds=100):
         while winner < 0:
             player = turn % 2 + 1
             if player == 2:
-                board, action, symmetryClass, _ = menaceMove(board)
-                menace_actions.append((action, symmetryClass))
+                board, action, symmetry_class, _ = menaceMove(board)
+                menace_actions.append((action, symmetry_class))
             else:
-                board, _ = randomPlayer(board)
+                board, _ = randomHumanMoves(board)
 
             turn += 1
 
             winner = determineWinner(board)
-            makeMenaceLearn(menace_actions, winner)
+            menaceTrain(menace_actions, winner)
 
         # Logging
         if r % (num_rounds // 10) == 0:
             action_histogram = {a: len(np.where(np.array(MENACE_MEMORY[0]["0" * 9]) == a)[0]) for a in range(9)}
-            print(plot_values(Ternary("0" * 9), action_histogram, decimal=False))
+            print(valuePlotting(Ternary("0" * 9), action_histogram, decimal=False))
 
 
 if __name__ == "__main__":
-    initiate_menace_memory()
-    print("trainMenaceing...")
-    trainMenace()
-    print("trainMenaceing finished!")
+    initMenace()
+    print("Training...")
+    train()
+    print("Training finished!")
     print("-------------------------")
     print("Human vs Menace")
 
@@ -167,25 +157,25 @@ if __name__ == "__main__":
         _board = Ternary("0" * 9)
         _winner = -1
         _turn = 1
-        _menaceActions = []
-        _actionValues = {a: len(np.where(np.array(MENACE_MEMORY[0]["0" * 9]) == a)[0]) for a in range(9)}
+        _menace_actions = []
+        _action_values = {a: len(np.where(np.array(MENACE_MEMORY[0]["0" * 9]) == a)[0]) for a in range(9)}
 
         while _winner < 0:
             _player = _turn % 2 + 1
             if _player == 2:
-                print(_actionValues)
-                print(plot_values(_board, _actionValues, decimal=False))
-                _board, _action, _symmetryClass, _actionValues = menaceMove(_board)
-                _menaceActions.append((_action, _symmetryClass))
+                print(_action_values)
+                print(valuePlotting(_board, _action_values, decimal=False))
+                _board, _action, _symmetry_class, _action_values = menaceMove(_board)
+                _menace_actions.append((_action, _symmetry_class))
 
             else:
                 print(plot(_board))
-                _board, _ = humanPlayer(_board)
+                _board, _ = randomHumanMoves(_board)
 
             _winner = determineWinner(_board)
             _turn += 1
 
-        makeMenaceLearn(_menaceActions, _winner)
+        menaceTrain(_menace_actions, _winner)
 
         print(f"\nWinner: {_winner}\n")
         print(plot(_board))
