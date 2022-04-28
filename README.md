@@ -86,12 +86,10 @@ make test
 
 ## References
 
-- https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
-- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
-and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
-- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
-and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
-- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
-and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
-- Michie, D. (1963), "Experiments on the mechanization of game-learning Part I. Characterization of the model
-and its parameters", https://people.csail.mit.edu/brooks/idocs/matchbox.pdf
+- https://www.javatpoint.com/mini-max-algorithm-in-ai
+- https://www.mscroggs.co.uk/blog/tags/menace
+- http://www.se16.info/hgb/tictactoe.htm
+- https://en.wikipedia.org/wiki/Burnside%27s_lemma
+- https://levelup.gitconnected.com/minimax-algorithm-explanation-using-tic-tac-toe-game-22668694aa13
+- https://en.wikipedia.org/wiki/Matchbox_Educable_Noughts_and_Crosses_Engine#Origin
+- https://en.wikipedia.org/wiki/Burnside%27s_lemma
