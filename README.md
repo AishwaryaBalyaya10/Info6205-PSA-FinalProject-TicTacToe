@@ -1,4 +1,4 @@
-[REPORT]()
+[REPORT](https://github.com/AishwaryaBalyaya10/Info6205-PSA-FinalProject-TicTacToe/blob/main/docs/The%20Menace.pdf)
 
 # Introduction
 
