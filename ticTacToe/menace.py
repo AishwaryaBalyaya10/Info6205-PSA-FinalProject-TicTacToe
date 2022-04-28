@@ -20,6 +20,8 @@ logging.basicConfig(filename='logs/menace.log', level=logging.INFO, filemode='a'
 REPLICAS_PER_STAGE = [8, 4, 2, 1]
 REWARDS = {"won": 3, "draw": 1, "lost": -1}
 MENACE_MEMORY: Dict = {0: {}, 1: {}}
+TOTAL_GAMES = 100
+STATS = {"matches": 0, "menaceWins": 0, "menaceLost": 0, "menaceDraws": 0}
 
 
 class MenaceException(Exception):
@@ -154,7 +156,7 @@ def train(num_rounds=100):
 
 
 if __name__ == "__main__":
-    count = 0
+    gameCount = 0
     initMenace()
     logging.info("-------------------------")
     logging.info("Training...")
@@ -165,11 +167,11 @@ if __name__ == "__main__":
     logging.info("-------------------------")
     print("Training finished!")
     print("-------------------------")
-    
+
     play_again = True
     while play_again:
-        print("Human Moves vs Menace game count - " + str(count))
-        logging.info("Human Moves vs Menace game count - " + str(count))
+        print("Human Moves vs Menace game count - " + str(gameCount))
+        logging.info("Human Moves vs Menace game count - " + str(gameCount))
         _board = Ternary("0" * 9)
         _winner = -1
         _turn = 1
@@ -197,10 +199,31 @@ if __name__ == "__main__":
 
         menaceTrain(_menaceActions, _winner)
 
+        if _winner == 0:
+            print('Draw')
+            STATS['menaceDraws'] = STATS['menaceDraws'] + 1
+            print('Draw count' + str(STATS['menaceDraws']))
+
+        if _winner == 1:
+            print('Menace')
+            STATS['menaceWins'] = STATS['menaceWins'] + 1
+            print('Win count' + str(STATS['menaceWins']))
+
+        if _winner == 2:
+            print('Human')
+            STATS['menaceLost'] = STATS['menaceLost'] + 1
+            print('Lost count' + str(STATS['menaceLost']))
+
         print(f"\nWinner: {'Menace' if _winner == 2 else 'Human'}\n")
         print(plot(_board))
         logging.info(f"Winner: {'Menace' if _winner == 2 else 'Human'}")
         logging.info("\n" + plot(_board))
 
-        count = count + 1
-        play_again = count < 100
+        gameCount = gameCount + 1
+        STATS['matches'] = gameCount
+
+        if(gameCount==TOTAL_GAMES): 
+            print("Stats" + "-- Game -- "+ str(STATS['matches']) + "-- Wins -- "+ str(STATS['menaceWins']) + "-- Draws -- "+ str(STATS['menaceDraws']) + "-- Loss -- "+ str(STATS['menaceLost']))
+            logging.info("Stats" + "-- Game -- "+ str(STATS['matches']) + "-- Wins -- "+ str(STATS['menaceWins']) + "-- Draws -- "+ str(STATS['menaceDraws']) + "-- Loss -- "+ str(STATS['menaceLost']))
+
+        play_again = gameCount < TOTAL_GAMES
