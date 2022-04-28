@@ -77,8 +77,9 @@ if __name__ == "__main__":
         logging.info("Turns " + str(_turn))
 
         print(f"\nWinner: {_winner}\n")
-        logging.info(f"\nWinner: {_winner}\n")
+        print(f"\nWinner: {'Menace' if _winner == 2 else 'Human'}\n")
         print(plot(_board))
-        logging.info(plot(_board))
+        logging.info(f"Winner: {'Menace' if _winner == 2 else 'Human'}")
+        logging.info("\n" + plot(_board))
 
         playAgain = input("Play again [y/n]: ") == "y"
