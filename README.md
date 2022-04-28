@@ -4,6 +4,10 @@
 
 The aim of this project to implement the [MENACE: Machine Educable Noughts And Crosses Engine](https://people.csail.mit.edu/brooks/idocs/matchbox.pdf). Donald Michie, an artificial intelligence researcher, devised and built a mechanical computer out of 304 matchboxes in 1961 to train it in game of tic-tac-toe by playing againts human opponents. Given a source,destination and a mask image, our goal is to generate a realistic composite belnded image. We have used TensorFlow to implement this paper.
 
+# Team Members
+- Aishwarya Balyaya NUID - 
+- Niul Panvalkar NUID - 002950308
+- Shubhang Shah NUID - 002111376
 # Requirements
 
 - python3.8
